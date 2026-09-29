@@ -48,6 +48,7 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     Drivers/Src/gpio.c
     Drivers/Src/timer_reg.c
     Drivers/Src/rcc.c
+    Drivers/Src/nvic.c
     # [BSP Layer] Board-specific peripheral wrappers
     BSP/Src/led_control.c
     BSP/Src/button_exti.c

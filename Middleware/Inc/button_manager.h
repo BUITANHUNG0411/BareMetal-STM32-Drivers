@@ -19,9 +19,11 @@
 
 #pragma once
 
+#include "button_manager.h"
 #include "button_exti.h"
 #include "led_control.h"
 #include "timer_reg.h"
+#include "nvic.h"
 
 /**
  * @brief States of the internal debounce finite state machine.

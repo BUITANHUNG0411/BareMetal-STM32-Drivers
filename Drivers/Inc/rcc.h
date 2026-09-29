@@ -50,6 +50,56 @@ typedef struct {
 /**
  * @brief Pointer to the RCC register block.
  *
- * Usage:  RCC->APB2ENR |= (1U << 2);   // enable GPIOA clock
+ * @note  Usage:  RCC->APB2ENR |= (1U << 2);   // enable GPIOA clock
  */
 #define RCC ((RCC_Typedef *)RCC_BASE)
+
+/* ---------------------------------------------------------------------------
+ * Flash memory interface  (RM0008 §3.3, base address 0x4002_2000)
+ * The Flash ACR must be programmed with the correct wait-state count before
+ * the system clock is raised above the Flash read-access frequency limit.
+ * --------------------------------------------------------------------------*/
+
+/** @brief Physical base address of the Flash memory interface register block. */
+#define FLASH_BASE 0x40022000UL
+
+/**
+ * @brief Flash access control register (ACR).
+ *
+ *        Relevant fields:
+ *          - LATENCY [2:0] — number of wait states (0–2) required for the
+ *            target SYSCLK frequency (RM0008 Table 11).
+ *          - PRFTBE  [4]   — prefetch buffer enable; improves sustained
+ *            instruction fetch throughput at high clock frequencies.
+ */
+#define FLASH_ACR (*(volatile UINT32 *)(FLASH_BASE + 0x00))
+
+/* ---------------------------------------------------------------------------
+ * Clock configuration API
+ * --------------------------------------------------------------------------*/
+
+/**
+ * @brief  Switch the system clock source to the PLL and configure it to
+ *         produce a 72 MHz SYSCLK from the 8 MHz HSE oscillator.
+ *
+ * @return void
+ *
+ * @note   Call this function once at startup, before initialising any
+ *         peripheral that depends on SYSCLK, HCLK, or PCLK1/PCLK2.
+ *
+ *         Clock tree after this function returns:
+ *           - HSE  =   8 MHz  (external crystal)
+ *           - PLL  =  72 MHz  (HSE × 9, PLLMUL = 7 → ×9)
+ *           - SYSCLK = 72 MHz (PLL selected as clock source)
+ *           - HCLK   = 72 MHz (AHB prescaler = 1)
+ *           - PCLK1  = 36 MHz (APB1 prescaler = 2, max 36 MHz)
+ *           - PCLK2  = 72 MHz (APB2 prescaler = 1)
+ *
+ *         Flash wait states are set to 2 cycles and the prefetch buffer is
+ *         enabled before raising SYSCLK, as required by RM0008 §3.4.
+ *
+ * @warning Blocking waits are used for HSE ready (HSERDY) and PLL locked
+ *          (PLLRDY) flags. If HSE fails to start (e.g., no crystal fitted),
+ *          this function will hang indefinitely.
+ */
+void RCC_SystemClock_72MHz(void);

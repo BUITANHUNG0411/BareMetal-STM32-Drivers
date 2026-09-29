@@ -33,11 +33,13 @@
 
 void Button_Exti_Init(Button_Device *btn)
 {
-    /* Set floating input mode so the GPIO pad is high-impedance; the board's
-     * external pull-up holds the line high until the button grounds it. */
-    btn->gpio_config.cnf  = 0x2;
+    /* Set input with pull-up/pull-down mode */
+    btn->gpio_config.cnf  = 0x2; 
     btn->gpio_config.mode = 0x0;
     GPIO_Init(&btn->gpio_config);
+    
+    /* Write 1 to ODR to select Pull-Up instead of Pull-Down */
+    GPIO_WritePin(&btn->gpio_config, set);
 
     /* AFIO clock must be enabled before its port-select registers are written;
      * writing to an unclocked peripheral is silently discarded by the APB bridge. */
@@ -63,5 +65,5 @@ void Button_Exti_ClearFlag(Button_Device *btn)
 {
     /* Acknowledge the interrupt by clearing the pending flag; EXTI_PR is write-1-to-clear,
      * so omitting this step causes the ISR to re-enter in an infinite loop on return. */
-    EXTI_PR |= (1U << 0);
+    EXTI_PR = (1U << 0);
 }

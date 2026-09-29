@@ -11,10 +11,7 @@
  */
 
 #include "button_manager.h"
-#include "button_exti.h"
-#include "led_control.h"
-#include "stm32f103xb.h"
-#include "timer_reg.h"
+#include "nvic.h"
 
 /* ---------------------------------------------------------------------------
  * Module-private state
@@ -38,6 +35,9 @@ void ButtonManager_Init(ButtonManager_Config *config)
      * This prevents a dangling-pointer scenario if the caller's struct goes out
      * of scope (e.g., a local variable in main() before the infinite loop). */
     s_cfg = *config;
+
+    /* Enable button external and debounce timer interrupt in the NVIC */
+    NVIC_Init();
 }
 
 void ButtonManager_EXTI_Handler(void)

@@ -55,12 +55,12 @@ void GPIO_WritePin(GPIO_PinConfig *gpio_config, PIN_STATE state)
         /* Writing to the BR half of BSRR pulls the line low without a read cycle,
          * eliminating the read-modify-write window where an interrupt could corrupt ODR. */
         case reset:
-            (*(volatile UINT32*)(gpio_config->port_base + 0x10)) |= (1U << (gpio_config->pin_number + 16));
+            (*(volatile UINT32*)(gpio_config->port_base + 0x10)) = (1U << (gpio_config->pin_number + 16));
             return;
 
         /* Writing to the BS half of BSRR drives the line high with the same atomicity. */
         case set:
-            (*(volatile UINT32*)(gpio_config->port_base + 0x10)) |= (1U << gpio_config->pin_number);
+            (*(volatile UINT32*)(gpio_config->port_base + 0x10)) = (1U << gpio_config->pin_number);
             break;
     }
 }
