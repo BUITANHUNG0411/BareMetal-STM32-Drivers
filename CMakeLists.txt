@@ -47,6 +47,7 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     # [Hardware Driver Layer] Chip-level, register-direct, board-agnostic
     Drivers/Src/gpio.c
     Drivers/Src/timer_reg.c
+    Drivers/Src/rcc.c
     # [BSP Layer] Board-specific peripheral wrappers
     BSP/Src/led_control.c
     BSP/Src/button_exti.c

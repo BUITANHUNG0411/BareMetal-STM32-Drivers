@@ -1,21 +1,6 @@
-/**
- * @file gpio.h
- * @author BUI_TAN_HUNG
- * @brief Declares GPIO type definitions, port base addresses, and driver API for STM32F1xx.
- * @version 1.0.0
- * @date 2026-09-28
- *
- * @copyright Copyright (c) 2026
- *
- */
-
 #pragma once
 
-typedef unsigned int UINT32;
-typedef unsigned char UINT8;
-
-#define RCC_APB1ENR (*(volatile UINT32*)(0x40021000 + 0x1C))
-#define RCC_APB2ENR (*(volatile UINT32*)(0x40021000 + 0x18))
+#include "rcc.h"
 
 /**
  * @brief Definition BASE ADDRESS of GPIO.

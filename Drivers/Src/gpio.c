@@ -24,15 +24,15 @@ void GPIO_Init(GPIO_PinConfig *gpio_config)
 {
     switch (gpio_config->port_base)
     {
-        /* Enable GPIOx peripheral clock via RCC_APB2ENR (RM0008 §7.3.7). */
+        /* Enable GPIOx peripheral clock via RCC->APB2ENR (RM0008 §7.3.7). */
 
-        case GPIOA_BASE: RCC_APB2ENR |= (1U << 2); break;
-        case GPIOB_BASE: RCC_APB2ENR |= (1U << 3); break;
-        case GPIOC_BASE: RCC_APB2ENR |= (1U << 4); break;
-        case GPIOD_BASE: RCC_APB2ENR |= (1U << 5); break;
-        case GPIOE_BASE: RCC_APB2ENR |= (1U << 6); break;
-        case GPIOF_BASE: RCC_APB2ENR |= (1U << 7); break;
-        case GPIOG_BASE: RCC_APB2ENR |= (1U << 8); break;
+        case GPIOA_BASE: RCC->APB2ENR |= (1U << 2); break;
+        case GPIOB_BASE: RCC->APB2ENR |= (1U << 3); break;
+        case GPIOC_BASE: RCC->APB2ENR |= (1U << 4); break;
+        case GPIOD_BASE: RCC->APB2ENR |= (1U << 5); break;
+        case GPIOE_BASE: RCC->APB2ENR |= (1U << 6); break;
+        case GPIOF_BASE: RCC->APB2ENR |= (1U << 7); break;
+        case GPIOG_BASE: RCC->APB2ENR |= (1U << 8); break;
     }
 
     UINT32 cnf_mode_value = (gpio_config->cnf << 2) | gpio_config->mode;

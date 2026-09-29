@@ -39,7 +39,7 @@ void Button_Exti_Init(Button_Device *btn)
     btn->gpio_config.mode = 0x0;
     GPIO_Init(&btn->gpio_config);
 
-    RCC_APB2ENR |= (1 << 0);
+    RCC->APB2ENR |= (1U << 0);   /* Enable AFIO clock (AFIOEN, bit 0). */
 
     AFIO_EXTICR1 &= ~(0xF << 0);
     AFIO_EXTICR1 |= (0x00 << 0);

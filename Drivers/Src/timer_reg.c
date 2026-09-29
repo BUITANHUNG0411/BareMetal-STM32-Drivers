@@ -1,9 +1,8 @@
 #include "timer_reg.h"
-#include "gpio.h"
 
 void TIMER_BASE_Init(TIMER_Typedef *TIMx, UINT8 timer_number, TIMER_Config *timer_config)
 {
-    RCC_APB1ENR |= (1 << (timer_number-2));
+    RCC->APB1ENR |= (1U << (timer_number - 2));
     TIMx->PSC = timer_config->Prescaler;
     TIMx->ARR = timer_config->AutoReload;
     TIMx->DIER |= (1 << 0); //UIE

@@ -11,7 +11,6 @@
 
 #pragma once
 #include "gpio.h"
-typedef unsigned int    UINT32;
 
 typedef struct{
     GPIO_PinConfig gpio_config;
