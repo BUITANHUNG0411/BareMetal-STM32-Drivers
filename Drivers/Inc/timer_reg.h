@@ -39,24 +39,25 @@
  *        not be written; consulting RM0008 §15 before extending this driver is advised.
  */
 typedef struct {
-    volatile UINT32 CR1;   /**< Control register 1            (offset 0x00) */
-    volatile UINT32 CR2;   /**< Control register 2            (offset 0x04) */
-    volatile UINT32 SMCR;  /**< Slave mode control register   (offset 0x08) */
-    volatile UINT32 DIER;  /**< DMA/interrupt enable register (offset 0x0C) */
-    volatile UINT32 SR;    /**< Status register               (offset 0x10) */
-    volatile UINT32 EGR;   /**< Event generation register     (offset 0x14) */
-    volatile UINT32 CCMR1; /**< Capture/compare mode 1        (offset 0x18) */
-    volatile UINT32 CCMR2; /**< Capture/compare mode 2        (offset 0x1C) */
-    volatile UINT32 CCER;  /**< Capture/compare enable        (offset 0x20) */
-    volatile UINT32 CNT;   /**< Counter value                 (offset 0x24) */
-    volatile UINT32 PSC;   /**< Prescaler                     (offset 0x28) */
-    volatile UINT32 ARR;   /**< Auto-reload register          (offset 0x2C) */
-    volatile UINT32 CCR1;  /**< Capture/compare register 1    (offset 0x34) */
-    volatile UINT32 CCR2;  /**< Capture/compare register 2    (offset 0x38) */
-    volatile UINT32 CCR3;  /**< Capture/compare register 3    (offset 0x3C) */
-    volatile UINT32 CCR4;  /**< Capture/compare register 4    (offset 0x40) */
-    volatile UINT32 DRC;   /**< DMA control register          (offset 0x48) */
-    volatile UINT32 DMAR;  /**< DMA address for burst         (offset 0x4C) */
+    volatile UINT32 CR1;        /**< Control register 1            (offset 0x00) */
+    volatile UINT32 CR2;        /**< Control register 2            (offset 0x04) */
+    volatile UINT32 SMCR;       /**< Slave mode control register   (offset 0x08) */
+    volatile UINT32 DIER;       /**< DMA/interrupt enable register (offset 0x0C) */
+    volatile UINT32 SR;         /**< Status register               (offset 0x10) */
+    volatile UINT32 EGR;        /**< Event generation register     (offset 0x14) */
+    volatile UINT32 CCMR1;      /**< Capture/compare mode 1        (offset 0x18) */
+    volatile UINT32 CCMR2;      /**< Capture/compare mode 2        (offset 0x1C) */
+    volatile UINT32 CCER;       /**< Capture/compare enable        (offset 0x20) */
+    volatile UINT32 CNT;        /**< Counter value                 (offset 0x24) */
+    volatile UINT32 PSC;        /**< Prescaler                     (offset 0x28) */
+    volatile UINT32 ARR;        /**< Auto-reload register          (offset 0x2C) */
+    volatile UINT32 Reversed1;  /**< Reserved                       (offset 0x30) */
+    volatile UINT32 CCR1;       /**< Capture/compare register 1    (offset 0x34) */
+    volatile UINT32 CCR2;       /**< Capture/compare register 2    (offset 0x38) */
+    volatile UINT32 CCR3;       /**< Capture/compare register 3    (offset 0x3C) */
+    volatile UINT32 CCR4;       /**< Capture/compare register 4    (offset 0x40) */
+    volatile UINT32 DRC;        /**< DMA control register          (offset 0x48) */
+    volatile UINT32 DMAR;       /**< DMA address for burst         (offset 0x4C) */
 } TIMER_Typedef;
 
 /**

@@ -37,7 +37,8 @@ void ButtonManager_Init(ButtonManager_Config *config)
     s_cfg = *config;
 
     /* Enable button external and debounce timer interrupt in the NVIC */
-    NVIC_Init();
+    NVIC_Enable(TIM2_IRQn);
+    NVIC_Enable(EXTI0_IRQn);
 }
 
 void ButtonManager_EXTI_Handler(void)

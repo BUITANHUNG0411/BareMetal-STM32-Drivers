@@ -4,7 +4,7 @@
 
 int main(void) 
 {
-    // RCC_SystemClock_72MHz(); // Bỏ comment sẽ gây treo trong Proteus nếu không có thạch anh, và làm sai thời gian debounce (từ 20ms xuống 2.2ms)
+    RCC_SystemClock_72MHz();
 
     static Button_Device s_btn = {.gpio_config = {.port_base = GPIOA_BASE,
                                                  .pin_number = 0,
@@ -25,7 +25,6 @@ int main(void)
                                              .tim_cfg = &s_tim_cfg,
                                              .led = &s_led};
     ButtonManager_Init(&s_btn_cfg);
-    NVIC_Init();
     while (1)
     {
     
