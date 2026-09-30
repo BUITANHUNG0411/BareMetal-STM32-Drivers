@@ -42,7 +42,6 @@ typedef enum {
 typedef struct {
     Button_Device  *btn;          /**< Button device to monitor for press events.           */
     TIMER_Typedef  *tim;          /**< Timer peripheral used to measure the debounce window. */
-    UINT8           timer_number; /**< Logical timer index [2–5] for APB1 clock gate setup. */
     TIMER_Config   *tim_cfg;      /**< Prescaler and auto-reload defining the debounce period. */
     LED_Device     *led;          /**< LED device toggled on each validated button press.    */
 } ButtonManager_Config;

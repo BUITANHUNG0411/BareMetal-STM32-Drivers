@@ -21,7 +21,6 @@ int main(void)
 
     static ButtonManager_Config s_btn_cfg = {.btn = &s_btn,
                                              .tim = TIM2,
-                                             .timer_number = 2,
                                              .tim_cfg = &s_tim_cfg,
                                              .led = &s_led};
     ButtonManager_Init(&s_btn_cfg);

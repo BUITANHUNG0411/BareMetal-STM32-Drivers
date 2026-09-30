@@ -24,7 +24,7 @@ static ButtonManager_Config s_cfg;
 void ButtonManager_Init(ButtonManager_Config *config)
 {
     Button_Exti_Init(config->btn);
-    TIMER_BASE_Init(config->tim, config->timer_number, config->tim_cfg);
+    TIMER_BASE_Init(config->tim, config->tim_cfg);
     LED_Init(config->led);
 
     /* Start in IDLE so the very first button press is captured without needing

@@ -56,7 +56,7 @@ typedef struct {
     volatile UINT32 CCR2;       /**< Capture/compare register 2    (offset 0x38) */
     volatile UINT32 CCR3;       /**< Capture/compare register 3    (offset 0x3C) */
     volatile UINT32 CCR4;       /**< Capture/compare register 4    (offset 0x40) */
-    volatile UINT32 REVERSED1;  /**< Reserved                      (offset 0x44) */
+    volatile UINT32 RESERVED1;  /**< Reserved                      (offset 0x44) */
     volatile UINT32 DCR;        /**< DMA control register          (offset 0x48) */
     volatile UINT32 DMAR;       /**< DMA address for burst         (offset 0x4C) */
 } TIMER_Typedef;
@@ -77,18 +77,27 @@ typedef struct {
  * --------------------------------------------------------------------------*/
 
 /**
- * @brief  Enable the timer APB1 clock, program PSC/ARR, and arm the update interrupt.
+ * @brief  Enable the APB1 peripheral clock for the target timer, program PSC/ARR,
+ *         and arm the update interrupt (UIE).
  *
- * @param  TIMx          Pointer to the target timer register block (use TIM2–TIM5 macros).
- * @param  timer_number  Logical timer index in [2, 5]; determines the APB1ENR clock-gate bit.
- * @param  timer_config  Pointer to a TIMER_Config with the desired Prescaler and AutoReload.
- *                       Must not be NULL.
+ * @param  TIMx         Pointer to the target timer register block. Pass one of the
+ *                      convenience macros: TIM2, TIM3, TIM4, or TIM5. The function
+ *                      derives the correct APB1ENR clock-gate bit from the pointer
+ *                      address, so no separate timer-index argument is required.
+ * @param  timer_config Pointer to a @c TIMER_Config supplying the raw PSC and ARR
+ *                      values. Must not be NULL.
  * @return void
- * @note   Does not start the counter; call TIMER_Start() to begin counting.
- *         The update interrupt (UIE) is armed so the ISR fires on each ARR overflow,
- *         which is the mechanism used to signal the end of the debounce window.
+ *
+ * @note   The counter is left stopped after this call; invoke TIMER_Start() to
+ *         begin counting. UIE is armed so the timer ISR fires on every ARR
+ *         overflow — the mechanism used to signal the end of a debounce window.
+ *
+ * @warning Passing a pointer that does not correspond to TIM2–TIM5 (e.g., an
+ *          advanced-control timer base) will fall through the internal switch
+ *          without enabling any clock, leaving the peripheral unclocked and
+ *          subsequent register writes silently discarded.
  */
-void TIMER_BASE_Init(TIMER_Typedef *TIMx, UINT8 timer_number, TIMER_Config *timer_config);
+void TIMER_BASE_Init(TIMER_Typedef *TIMx, TIMER_Config *timer_config);
 
 /**
  * @brief  Start the timer counter.

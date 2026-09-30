@@ -10,18 +10,28 @@
 
 #include "timer_reg.h"
 
-void TIMER_BASE_Init(TIMER_Typedef *TIMx, UINT8 timer_number, TIMER_Config *timer_config)
+void TIMER_BASE_Init(TIMER_Typedef *TIMx, TIMER_Config *timer_config)
 {
-    /* TIM2–TIM5 share consecutive APB1ENR enable bits starting at bit 0 (TIM2).
-     * Subtracting 2 from the logical timer number maps it directly to the correct
-     * bit position without a lookup table. */
-    RCC->APB1ENR |= (1U << (timer_number - 2));
+    /* Gate the APB1 peripheral clock for the target timer before accessing its
+     * registers. TIM2–TIM5 occupy consecutive enable bits starting at bit 0;
+     * the correct bit is selected by switching on the peripheral base address.
+     * Accessing an unclocked peripheral is silently ignored by the APB bridge,
+     * which would leave PSC/ARR at their reset values without any error signal. */
+    switch ((UINT32)TIMx)
+    {
+        case TIM2_BASE: RCC->APB1ENR |= (1U << 0); break;
+        case TIM3_BASE: RCC->APB1ENR |= (1U << 1); break;
+        case TIM4_BASE: RCC->APB1ENR |= (1U << 2); break;
+        case TIM5_BASE: RCC->APB1ENR |= (1U << 3); break;
+    }
 
     TIMx->PSC  = timer_config->Prescaler;
     TIMx->ARR  = timer_config->AutoReload;
 
-    /* Enabling UIE arms the timer to assert its interrupt line on each counter overflow,
-     * which is the hardware signal the debounce middleware uses as a timeout notification. */
+    /* Enabling UIE arms the timer to assert its interrupt line on each counter
+     * overflow, which is the hardware signal the debounce middleware uses as a
+     * timeout notification. The counter is left stopped; the caller must invoke
+     * TIMER_Start() when ready to begin the debounce window. */
     TIMx->DIER |= (1U << 0);
 }
 
