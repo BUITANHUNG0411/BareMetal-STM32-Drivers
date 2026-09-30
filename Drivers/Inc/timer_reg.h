@@ -51,12 +51,13 @@ typedef struct {
     volatile UINT32 CNT;        /**< Counter value                 (offset 0x24) */
     volatile UINT32 PSC;        /**< Prescaler                     (offset 0x28) */
     volatile UINT32 ARR;        /**< Auto-reload register          (offset 0x2C) */
-    volatile UINT32 Reversed1;  /**< Reserved                       (offset 0x30) */
+    volatile UINT32 RESERVED0;  /**< Reserved                      (offset 0x30) */
     volatile UINT32 CCR1;       /**< Capture/compare register 1    (offset 0x34) */
     volatile UINT32 CCR2;       /**< Capture/compare register 2    (offset 0x38) */
     volatile UINT32 CCR3;       /**< Capture/compare register 3    (offset 0x3C) */
     volatile UINT32 CCR4;       /**< Capture/compare register 4    (offset 0x40) */
-    volatile UINT32 DRC;        /**< DMA control register          (offset 0x48) */
+    volatile UINT32 REVERSED1;  /**< Reserved                      (offset 0x44) */
+    volatile UINT32 DCR;        /**< DMA control register          (offset 0x48) */
     volatile UINT32 DMAR;       /**< DMA address for burst         (offset 0x4C) */
 } TIMER_Typedef;
 
